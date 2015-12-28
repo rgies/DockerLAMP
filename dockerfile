@@ -6,11 +6,8 @@
 # Pull base image.
 FROM ubuntu:14.04
 
-# Install.
-RUN \
-  apt-get update && \
-  apt-get upgrade && \
-  apt-get install git
+# Install
+RUN apt-get update
 
 # Add files.
 #ADD root/.bashrc /root/.bashrc
