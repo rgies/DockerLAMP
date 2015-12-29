@@ -58,7 +58,7 @@ Loading your custom PHP application with composer requirements
 
 Create a Dockerfile like the following:
 
-    FROM tutum/apache-php
+    FROM rgies/DockerTest
     RUN apt-get update && apt-get install -yq git && rm -rf /var/lib/apt/lists/*
     RUN rm -fr /app
     ADD . /app
