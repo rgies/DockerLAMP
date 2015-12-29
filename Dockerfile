@@ -6,22 +6,34 @@
 # Pull base image.
 FROM ubuntu:14.04
 
-# Install
-RUN apt-get update && apt-get install -y php5 libapache2-mod-php5 php5-mysql php5-cli && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install base packages
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq install \
+        curl \
+        apache2 \
+        libapache2-mod-php5 \
+        php5-mysql \
+        php5-mcrypt \
+        php5-gd \
+        php5-curl \
+        php-pear \
+        php-apc && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN /usr/sbin/php5enmod mcrypt
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
+    sed -i "s/variables_order.*/variables_order = \"EGPCS\"/g" /etc/php5/apache2/php.ini
 
-# Add files.
-#ADD root/.bashrc /root/.bashrc
-#ADD root/.gitconfig /root/.gitconfig
-#ADD root/.scripts /root/.scripts
+ENV ALLOW_OVERRIDE **False**
 
-# Set environment variables.
-ENV HOME /root
+# Add image configuration and scripts
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
 
-# Define working directory.
-WORKDIR /root
+# Configure /app folder with sample app
+RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
+ADD sample/ /app
 
-# Define default command.
-CMD ["bash"]
-
-# Start Services
-CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
+EXPOSE 80
+WORKDIR /app
+CMD ["/run.sh"]
