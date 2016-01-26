@@ -10,6 +10,7 @@ FROM ubuntu:14.04
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -yq install \
         curl \
+        git \
         apache2 \
         libapache2-mod-php5 \
         php5-mysql \
