@@ -36,7 +36,7 @@ Loading your custom PHP application
 This image can be used as a base image for your PHP application. Create a new `Dockerfile` in your
 PHP application folder with the following contents:
 
-    FROM rgies/DockerTest
+    FROM rgies/DockerLAMP
 
 After that, build the new `Dockerfile`:
 
