@@ -3,7 +3,7 @@ Base docker image to run PHP applications on Apache
 Building the base image
 -----------------------
 
-To create the base image, execute the following command on the tutum-docker-php folder:
+To create the base image, execute the following command on the docker folder:
 
     docker build -t <my_image_name> .
 
@@ -36,7 +36,7 @@ Loading your custom PHP application
 This image can be used as a base image for your PHP application. Create a new `Dockerfile` in your
 PHP application folder with the following contents:
 
-    FROM rgies/DockerLAMP
+    FROM rgies/php
 
 After that, build the new `Dockerfile`:
 
@@ -58,7 +58,7 @@ Loading your custom PHP application with composer requirements
 
 Create a Dockerfile like the following:
 
-    FROM rgies/DockerTest
+    FROM rgies/php
     RUN apt-get update && apt-get install -yq git && rm -rf /var/lib/apt/lists/*
     RUN rm -fr /app
     ADD . /app
